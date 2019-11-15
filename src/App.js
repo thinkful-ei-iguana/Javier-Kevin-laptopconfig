@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 // in both URLs and html attributes
 import slugify from 'slugify';
 import './App.css';
+import LaptopParts from './Components/LaptopParts'
 
 // This object will allow us to
 // easily convert numbers into US dollar values
@@ -43,39 +44,6 @@ class App extends Component {
   };
 
   render() {
-    console.log('appProps:',this.props)
-    console.log('appProps', this.props.features)
-    console.log('appProps', this.props.features.Processor)
-    const features = Object.keys(this.props.features).map((feature, idx) => {
-      const featureHash = feature + '-' + idx;
-      const options = this.props.features[feature].map(item => {
-        const itemHash = slugify(JSON.stringify(item));
-        return (
-          <div key={itemHash} className="feature__item">
-            <input
-              type="radio"
-              id={itemHash}
-              className="feature__option"
-              name={slugify(feature)}
-              checked={item.name === this.state.selected[feature].name}
-              onChange={e => this.updateFeature(feature, item)}
-            />
-            <label htmlFor={itemHash} className="feature__label">
-              {item.name} ({USCurrencyFormat.format(item.cost)})
-            </label>
-          </div>
-        );
-      });
-
-      return (
-        <fieldset className="feature" key={featureHash}>
-          <legend className="feature__name">
-            <h3>{feature}</h3>
-          </legend>
-          {options}
-        </fieldset>
-      );
-    });
 
     const summary = Object.keys(this.state.selected).map((feature, idx) => {
       const featureHash = feature + '-' + idx;
@@ -96,6 +64,9 @@ class App extends Component {
       (acc, curr) => acc + this.state.selected[curr].cost,
       0
     );
+    
+    console.log('in app: this.props is',this.props)
+    console.log('in app: this.props.features is',this.props.features)
 
     return (
       <div className="App">
@@ -105,8 +76,11 @@ class App extends Component {
         <main>
           <form className="main__form">
             <h2>Customize your laptop</h2>
-            {console.log(features)}
-            {features}
+            <LaptopParts 
+              currency = {this.USCurrencyFormat}
+              obj = {this.props}
+              state = {this.state}
+            />
           </form>
           <section className="main__summary">
             <h2>Your cart</h2>
