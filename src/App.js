@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import LaptopParts from './Components/LaptopParts';
+import Cart from './Components/Cart';
 
 class App extends Component {
   state = {
@@ -43,12 +44,12 @@ class App extends Component {
       const checked = this.state.selected[feature].name;
       return (
         <LaptopParts
-        featureHash = {featureHash}
-        feature = {feature}
-        options = {this.props.features[feature]}
-        updateFeature = {this.updateFeature}
-        checked = {checked}
-        currency = {this.USCurrencyFormat}
+        featureHash={featureHash}
+        feature={feature}
+        options={this.props.features[feature]}
+        updateFeature={this.updateFeature}
+        checked={checked}
+        currency={this.USCurrencyFormat}
         
         />
       )
@@ -59,13 +60,12 @@ class App extends Component {
       const selectedOption = this.state.selected[feature];
 
       return (
-        <div className="summary__option" key={featureHash}>
-          <div className="summary__option__label">{feature} </div>
-          <div className="summary__option__value">{selectedOption.name}</div>
-          <div className="summary__option__cost">
-            {this.USCurrencyFormat.format(selectedOption.cost)}
-          </div>
-        </div>
+        <Cart 
+        featureHash={featureHash}
+        feature={feature}
+        selectedOption={selectedOption}
+        currency={this.USCurrencyFormat}
+        />
       );
     });
 
