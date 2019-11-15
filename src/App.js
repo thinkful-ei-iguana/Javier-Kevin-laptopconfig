@@ -44,6 +44,7 @@ class App extends Component {
   };
 
   render() {
+    console.log('appProps:',this.props)
     const features = Object.keys(this.props.features).map((feature, idx) => {
       const featureHash = feature + '-' + idx;
       const options = this.props.features[feature].map(item => {
@@ -103,11 +104,10 @@ class App extends Component {
         <main>
           <form className="main__form">
             <h2>Customize your laptop</h2>
-            <Processor 
+            {/* <Processor 
             usCurrency={USCurrencyFormat}
             features={this.props}
-            check={console.log(this.props)}
-            />
+            /> */}
             {features}
           </form>
           <section className="main__summary">

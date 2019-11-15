@@ -2,36 +2,28 @@ import React from 'react'
 import slugify from 'slugify'
 
 export default function Processor(props) {
-    console.log(props)
-    console.log(features)
-    const features = Object.keys(props.features).map((feature, idx) => {
-        const featureHash = feature + '-' + idx;
-        const options = props.features[feature].map(item => {
-          const itemHash = slugify(JSON.stringify(item));
-          return (
-            <div key={itemHash} className="feature__item">
-              <input
-                type="radio"
-                id={itemHash}
-                className="feature__option"
-                name={slugify(feature)}
-                checked={item.name === this.state.selected[feature].name}
-                onChange={e => this.updateFeature(feature, item)}
-              />
-              <label htmlFor={itemHash} className="feature__label">
-                {item.name} ({props.USCurrencyFormat.format(item.cost)})
-              </label>
-            </div>
-          );
-        });
-  
+    console.log('proProps:',Object.keys(props.features))
+
+
+    // const features = Object.keys(props.features).map((feature, idx) => {
+    //     const featureHash = feature + '-' + idx;
+    //     console.log('feature:',feature)
+    //     const options = props.features[feature].map(item => {
+    //       const itemHash = slugify(JSON.stringify(item));
+
+
+        const feature = Object.keys(props.features).map(item => {
+            console.log('item:',item)
+            
+        })
+
         return (
-          <fieldset className="feature" key={featureHash}>
+          <fieldset className="feature" >
             <legend className="feature__name">
               <h3>{feature}</h3>
             </legend>
-            {options}
+            
           </fieldset>
         );
-      });
+     
 }
