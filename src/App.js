@@ -1,17 +1,6 @@
 import React, { Component } from 'react';
-
-// Normalizes string as a slug - a string that is safe to use
-// in both URLs and html attributes
-import slugify from 'slugify';
 import './App.css';
-import LaptopParts from './Components/LaptopParts'
-
-// This object will allow us to
-// easily convert numbers into US dollar values
-const USCurrencyFormat = new Intl.NumberFormat('en-US', {
-  style: 'currency',
-  currency: 'USD'
-});
+import LaptopParts from './Components/LaptopParts';
 
 class App extends Component {
   state = {
@@ -35,6 +24,11 @@ class App extends Component {
     }
   };
 
+  USCurrencyFormat = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD'
+  });
+
   updateFeature = (feature, newValue) => {
     const selected = Object.assign({}, this.state.selected);
     selected[feature] = newValue;
@@ -44,6 +38,21 @@ class App extends Component {
   };
 
   render() {
+    const features = Object.keys(this.props.features).map((feature, idx) => {
+      const featureHash = feature + '-' + idx;
+      const checked = this.state.selected[feature].name;
+      return (
+        <LaptopParts
+        featureHash = {featureHash}
+        feature = {feature}
+        options = {this.props.features[feature]}
+        updateFeature = {this.updateFeature}
+        checked = {checked}
+        currency = {this.USCurrencyFormat}
+        
+        />
+      )
+      });
 
     const summary = Object.keys(this.state.selected).map((feature, idx) => {
       const featureHash = feature + '-' + idx;
@@ -54,7 +63,7 @@ class App extends Component {
           <div className="summary__option__label">{feature} </div>
           <div className="summary__option__value">{selectedOption.name}</div>
           <div className="summary__option__cost">
-            {USCurrencyFormat.format(selectedOption.cost)}
+            {this.USCurrencyFormat.format(selectedOption.cost)}
           </div>
         </div>
       );
@@ -64,9 +73,6 @@ class App extends Component {
       (acc, curr) => acc + this.state.selected[curr].cost,
       0
     );
-    
-    console.log('in app: this.props is',this.props)
-    console.log('in app: this.props.features is',this.props.features)
 
     return (
       <div className="App">
@@ -76,11 +82,7 @@ class App extends Component {
         <main>
           <form className="main__form">
             <h2>Customize your laptop</h2>
-            <LaptopParts 
-              currency = {this.USCurrencyFormat}
-              obj = {this.props}
-              state = {this.state}
-            />
+            {features}
           </form>
           <section className="main__summary">
             <h2>Your cart</h2>
@@ -88,7 +90,7 @@ class App extends Component {
             <div className="summary__total">
               <div className="summary__total__label">Total</div>
               <div className="summary__total__value">
-                {USCurrencyFormat.format(total)}
+                {this.USCurrencyFormat.format(total)}
               </div>
             </div>
           </section>
