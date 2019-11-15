@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 // Normalizes string as a slug - a string that is safe to use
 // in both URLs and html attributes
 import slugify from 'slugify';
-
+import Processor from './Components/Processor.js'
 import './App.css';
 
 // This object will allow us to
@@ -103,6 +103,11 @@ class App extends Component {
         <main>
           <form className="main__form">
             <h2>Customize your laptop</h2>
+            <Processor 
+            usCurrency={USCurrencyFormat}
+            features={this.props}
+            check={console.log(this.props)}
+            />
             {features}
           </form>
           <section className="main__summary">
