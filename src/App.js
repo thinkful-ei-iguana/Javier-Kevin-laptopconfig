@@ -3,6 +3,7 @@ import './App.css';
 import LaptopParts from './Components/LaptopParts';
 import Cart from './Components/Cart';
 import MainForm from './Components/MainForm';
+import CartForm from './Components/CartForm';
 
 class App extends Component {
   state = {
@@ -40,20 +41,6 @@ class App extends Component {
   };
 
   render() {
-    const summary = Object.keys(this.state.selected).map((feature, idx) => {
-      const featureHash = feature + '-' + idx;
-      const selectedOption = this.state.selected[feature];
-
-      return (
-        <Cart 
-        featureHash={featureHash}
-        feature={feature}
-        selectedOption={selectedOption}
-        currency={this.USCurrencyFormat}
-        />
-      );
-    });
-
     const total = Object.keys(this.state.selected).reduce(
       (acc, curr) => acc + this.state.selected[curr].cost,
       0
@@ -76,7 +63,12 @@ class App extends Component {
           </form>
           <section className="main__summary">
             <h2>Your cart</h2>
-            {summary}
+            <CartForm 
+              features = {this.props.features}
+              state = {this.state.selected}
+              currency = {this.USCurrencyFormat}
+              updateFeature = {this.updateFeature}
+            />
             <div className="summary__total">
               <div className="summary__total__label">Total</div>
               <div className="summary__total__value">
