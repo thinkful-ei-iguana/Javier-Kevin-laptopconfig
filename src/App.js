@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
-import LaptopParts from './Components/LaptopParts';
-import Cart from './Components/Cart';
 import MainForm from './Components/MainForm';
 import CartForm from './Components/CartForm';
+import Total from './Components/Total'
 
 class App extends Component {
   state = {
@@ -41,11 +40,6 @@ class App extends Component {
   };
 
   render() {
-    const total = Object.keys(this.state.selected).reduce(
-      (acc, curr) => acc + this.state.selected[curr].cost,
-      0
-    );
-
     return (
       <div className="App">
         <header>
@@ -69,12 +63,10 @@ class App extends Component {
               currency = {this.USCurrencyFormat}
               updateFeature = {this.updateFeature}
             />
-            <div className="summary__total">
-              <div className="summary__total__label">Total</div>
-              <div className="summary__total__value">
-                {this.USCurrencyFormat.format(total)}
-              </div>
-            </div>
+            <Total
+              state = {this.state.selected}
+              currency = {this.USCurrencyFormat}
+            />
           </section>
         </main>
       </div>
