@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import LaptopParts from './Components/LaptopParts';
 import Cart from './Components/Cart';
+import MainForm from './Components/MainForm';
 
 class App extends Component {
   state = {
@@ -39,22 +40,6 @@ class App extends Component {
   };
 
   render() {
-    const features = Object.keys(this.props.features).map((feature, idx) => {
-      const featureHash = feature + '-' + idx;
-      const checked = this.state.selected[feature].name;
-      return (
-        <LaptopParts
-        featureHash={featureHash}
-        feature={feature}
-        options={this.props.features[feature]}
-        updateFeature={this.updateFeature}
-        checked={checked}
-        currency={this.USCurrencyFormat}
-        
-        />
-      )
-      });
-
     const summary = Object.keys(this.state.selected).map((feature, idx) => {
       const featureHash = feature + '-' + idx;
       const selectedOption = this.state.selected[feature];
@@ -82,7 +67,12 @@ class App extends Component {
         <main>
           <form className="main__form">
             <h2>Customize your laptop</h2>
-            {features}
+            <MainForm 
+              features = {this.props.features}
+              state = {this.state.selected}
+              currency = {this.USCurrencyFormat}
+              updateFeature = {this.updateFeature}
+            />
           </form>
           <section className="main__summary">
             <h2>Your cart</h2>
